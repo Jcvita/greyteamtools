@@ -1,0 +1,19 @@
+---
+- hosts: all
+  vars_prompt:
+    - name: "user_input"
+      prompt: "Type 'e' for elevate, 'r' for revoke"
+      private: no
+
+  roles:
+    - role: change-redteamaccount-privs
+      when: user_input == "e"
+      tags:
+        - Elevate Privileges on Ubuntu
+        - Elevate Privileges on Windows
+
+    - role: change-redteamaccount-privs
+      when: user_input == "r"
+      tags:
+        - Revoke Privileges on Ubuntu
+        - Revoke Privileges on Windows

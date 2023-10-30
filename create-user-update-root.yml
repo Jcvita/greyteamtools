@@ -1,0 +1,19 @@
+- name: Create Ubuntu users and update root password
+  hosts: ubuntu
+  vars:
+    username: "mousecostume"
+    password: "catinside"
+    new_root_password: "rootroot"
+  roles:
+  - role: create-linux-user
+  - role: change-linux-root-pass
+
+- name: Create Windows users and update administrator password
+  hosts: windows
+  vars:
+    username: "mousecostume"
+    password: "catinside"
+    new_admin_password: "rootroot"
+  roles:
+  - role: create-windows-user
+  - role: change-windows-admin-pass

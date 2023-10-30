@@ -1,0 +1,28 @@
+---
+- name: Create a new local windows user
+  win_user:
+    name: "{{ username }}"
+    password: "{{ password }}"
+    groups: "Users"
+    state: present
+    password_never_expires: yes
+    password_cannot_change: yes
+    account_disabled: no
+    account_locked: no
+
+- name: Add the new user to the Users group
+  win_group_membership:
+    name: "Users"
+    members: "{{ username }}"
+    state: present
+
+- name: Set permissions for the new user's home directory
+  win_acl:
+    path: "C:/Users/{{ username }}"
+    user: "{{ username }}"
+    rights:
+      - "read"
+      - "execute"
+      - "write"
+    type: "allow"
+    state: present

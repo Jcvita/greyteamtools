@@ -1,0 +1,6 @@
+username: newuser
+password: newuserpassword
+user_shell: /bin/bash
+user_groups:
+  - sudo
+user_append: yes

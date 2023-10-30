@@ -1,0 +1,5 @@
+- name: Change Windows administrator password
+  win_user:
+    name: Administrator
+    password: "{{ new_admin_password }}"
+    update_password: always

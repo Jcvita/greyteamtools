@@ -1,0 +1,4 @@
+- name: Change root password
+  become: true
+  user: root
+  shell: "echo 'root:{{ new_root_password }}' | chpasswd"

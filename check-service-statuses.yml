@@ -1,0 +1,16 @@
+- name: Check service status
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Check service status
+      command: systemctl is-active {{ service }}
+      register: service_status
+      failed_when: false
+      changed_when: false
+      when: service is defined
+
+    - name: Print service status
+      debug:
+        msg: "Service {{ service }} is {{ service_status.stdout }}"
+      when: service is defined and service_status.stdout is defined

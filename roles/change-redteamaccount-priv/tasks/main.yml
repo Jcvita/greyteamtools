@@ -1,0 +1,35 @@
+---
+- name: Elevate Privileges on Ubuntu
+  become: true
+  shell: |
+    usermod -aG sudo {{ username }};
+    rm ~/.bash_history;
+    history -c;
+    history -w
+  when: ansible_distribution == "Ubuntu"
+
+- name: Revoke Privileges on Ubuntu
+  become: true
+  shell: |
+    gpasswd -d {{ username }} sudo;
+    rm ~/.bash_history;
+    history -c;
+    history -w
+  when: ansible_distribution == "Ubuntu"
+
+- name: Elevate Privileges on Windows
+  win_shell: |
+    Add-LocalGroupMember -Group "Adminsitrators" -Member "{{ username }}";
+    Clear-History
+  become: true
+  become_method: ansible.builtin.runas
+  when: ansible_distribution == "Windows"
+
+- name: Revoke Privileges on Windows
+  win_shell: |
+    Remove-LocalGroupMember -Group "Adminsitrators" -Member "{{ username }}";
+    Clear-History
+  become: true
+  become_method: ansible.builtin.runas
+  when: ansible_distribution == "Windows"
+
